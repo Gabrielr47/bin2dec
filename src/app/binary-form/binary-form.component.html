@@ -1,22 +1,44 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-sm-6 border bg-light  pt-3 pb-3">
+    <div class="col-sm-6 border bg-light pt-3 pb-3">
       <h1>Binary to Decimal Converter</h1>
-      <form>
+      <form [formGroup]="binaryForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="binary">Binary Input</label>
           <input
             type="text"
-            class="form-control"
+            class="form-control mt-2"
             placeholder="Enter 0 or 1"
             id="binary"
+            required
+            autocomplete="off"
+            formControlName="binary"
+            [class.is-invalid]="binaryForm.controls.binary.hasError('pattern')"
           />
+          <div
+            class="invalid-feedback"
+            *ngIf="binaryForm.controls.binary.hasError('pattern')"
+          >
+            Enter either 0 or 1
+          </div>
         </div>
         <div class="form-group">
           <label for="decimal">Decimal Output</label>
-          <input type="text" class="form-control" id="decimal" />
+          <input
+            type="text"
+            class="form-control"
+            id="decimal"
+            formControlName="decimal"
+            readonly
+          />
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Convert</button>
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          [disabled]="!binaryForm.valid"
+        >
+          Convert
+        </button>
       </form>
     </div>
   </div>
